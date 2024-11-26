@@ -8,7 +8,7 @@ use std::{
 };
 
 type Job = Box<dyn FnOnce() + 'static + Sync + Send>;
-struct ThreadPool {
+pub struct ThreadPool {
     workders: Vec<Worker>,
     sender: Option<Sender<Job>>,
 }
