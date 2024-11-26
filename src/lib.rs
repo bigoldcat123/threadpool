@@ -1,19 +1,42 @@
+//! # czhmt
+//!
+//! `czhmt` is a poor threadpool
+//!
 use std::{
     borrow::Borrow,
     sync::{
         mpsc::{channel, Receiver, Sender},
         Arc, Mutex,
     },
-    thread::{self, JoinHandle}, time::Duration,
+    thread::{self, JoinHandle},
+    time::Duration,
 };
+///good !!!
+/// 
+
 
 type Job = Box<dyn FnOnce() + 'static + Sync + Send>;
+/// good!!
 pub struct ThreadPool {
     workders: Vec<Worker>,
     sender: Option<Sender<Job>>,
 }
 
+
 impl ThreadPool {
+/// ThreadPool
+///
+/// # Examples
+///
+/// ```
+/// use czhmt::ThreadPool;
+/// let pool = ThreadPool::new(4);
+/// for i in 0..10 {
+///    pool.exec(move || {
+///        println!("hi {:#?}", i);
+///    })
+/// }
+/// ```
     pub fn new(size: i32) -> Self {
         let mut workders = vec![];
         let (sender, receiver): (Sender<Job>, Receiver<Job>) = channel();
@@ -59,9 +82,8 @@ impl Worker {
         let th = thread::spawn(move || loop {
             let lock = receiver.lock().unwrap().recv();
             if let Ok(job) = lock {
-
                 println!("{:#?} is working!", name);
-                thread::sleep(Duration::from_secs(1));
+                // thread::sleep(Duration::from_secs(1));
                 job()
             } else {
                 break;
