@@ -1,7 +1,8 @@
 [package]
 name = "czhmt"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 description = "a threadpool"
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/bigoldcat123/threadpool.git"
 [dependencies]
